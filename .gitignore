@@ -1,0 +1,9 @@
+.venv39
+pypy2.7-v7.3.6-linux64
+*.pyc
+__pycache__/
+
+.vscode/
+flights/
+monetdb_release/
+MonetDB-11.41.11/

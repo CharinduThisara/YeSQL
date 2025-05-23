@@ -102,3 +102,10 @@ def extracttype(val):
 
 extracttype.registered = True
 
+
+def extractpcodenew(val):
+      try:
+        return '%09d' % int(val)
+      except:
+        return ''
+extractpcode.registered = True
