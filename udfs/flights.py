@@ -6,12 +6,10 @@ def getcity(arg): # input c data object
             break
         j += 1
     return arg
-
 getcity.registered = True
 
 def getcity_py(x):
     return  x[:x.rfind(',')]
-
 getcity_py.registered = True
 
 
@@ -89,15 +87,12 @@ divertedmap.registered = True
 
 
 def fillintimes(c, d, e):
-      if d != "":
-          if float(d) > 0:
-              return  float(e)
-          else:
-              return c 
-      else:
-            return c
+    if d != "":
+        if float(d) > 0:
+            return  float(e)
+        else:
+            return c 
+    else:
+        return c
 
 fillintimes.registered = True
-
-
-

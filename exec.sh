@@ -1,10 +1,13 @@
-sudo apt-get install bison
+# apt-get install bison
+# apt-get update && apt-get install -y g++
 tar -xf pypy_v.7.3.6.tar.gz
 python3 -m pip install apsw
 python3 -m pip install pymonetdb 
+python3 -m pip install cffi
 tar -xf pypy_v.7.3.6.tar.gz
 export LD_LIBRARY_PATH="$PWD/udfs/;$PWD/pypy2.7-v7.3.6-linux64/bin;$PWD/YeSQL_MonetDB/cffi_wrappers/"
 export PYTHONPATH="$PWD/udfs"
+export FUNCTION_PATH="$PWD/YeSQL_MonetDB/functions"
 export CURRENT=$PWD
 cd YeSQL_MonetDB/MonetDB-11.41.11
 mkdir build

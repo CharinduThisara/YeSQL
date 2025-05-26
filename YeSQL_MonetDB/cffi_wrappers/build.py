@@ -29,114 +29,118 @@ int avg_word_len_wrapped(char** input, int size, double* result);
 int extractpcodenew_wrapped(char** input, int size, char** result);
 """)
 
-ffi.set_source("my_plugin", "#include <stdint.h>", libraries=[], extra_link_args=["-pthread"])
+ffi.set_source("libwrappedudfs", "#include <stdint.h>", libraries=[], extra_link_args=["-pthread"])
 
 ffi.embedding_init_code(f"""
 import struct
 import sys, os
 from importlib import reload
-from my_plugin import  lib, ffi
+from libwrappedudfs import  lib, ffi
 #curmodulepath = os.path.dirname( os.path.abspath('./') )
-env=os.path.expanduser(os.path.expandvars('$PYTHONPATH')) # "source" directory with python script
-sys.path.insert(0, env)
+env1 = os.path.expanduser(os.path.expandvars('$PYTHONPATH'))
+env2 = os.path.expanduser(os.path.expandvars('$FUNCTION_PATH'))
+
+sys.path.insert(0, env2)
+sys.path.insert(0, env1)
 import flights
 import zillow
+from aggregate import date as d
 
 @ffi.def_extern()
 def getairlinename_wrapped(input,insize,result):
-        reload(flights)
-        for i in range(insize):
-          result[i] = lib.strdup(ffi.from_buffer(buffer(flights.getairlinename(ffi.string(input[i])))))
-        return 1
+  reload(flights)
+  for i in range(insize):
+    result[i] = lib.strdup(ffi.from_buffer(buffer(flights.getairlinename(ffi.string(input[i])))))
+  return 1
 
 @ffi.def_extern()
 def getcity_wrapped(input, insize, result):
-    # importlib.reload(mymodule)
-    reload(flights)
-    for i in range(insize):
-        result[i] = flights.getcity(lib.strdup(input[i]))
-    return 1
+  # importlib.reload(mymodule)
+  reload(flights)
+  for i in range(insize):
+      result[i] = flights.getcity(lib.strdup(input[i]))
+  return 1
 
 @ffi.def_extern()
 def getstate_wrapped(input, insize, result):
-    # importlib.reload(mymodule)
-    reload(flights)
-    for i in range(insize):
-        result[i] = flights.getstate(input[i])
-    return 1
+  # importlib.reload(mymodule)
+  reload(flights)
+  for i in range(insize):
+      result[i] = flights.getstate(input[i])
+  return 1
 
 @ffi.def_extern()
 def getcity_py_wrapped(input, insize, result):
-    reload(flights)
-    tmpstrs = [flights.getcity_py(ffi.string(input[i])) for i in range(insize)]
-    for i in range(insize):
-        result[i] = ffi.from_buffer(buffer(tmpstrs[i]))
-    return 1
+  reload(flights)
+  tmpstrs = [flights.getcity_py(ffi.string(input[i])) for i in range(insize)]
+  for i in range(insize):
+      result[i] = ffi.from_buffer(buffer(tmpstrs[i]))
+  return 1
 
 @ffi.def_extern()
 def getstate_py_wrapped(input, insize, result):
-    reload(flights)
-    tmpstrs = [flights.getstate_py(ffi.string(input[i])) for i in range(insize)]
-    for i in range(insize):
-        result[i] = ffi.from_buffer(buffer(tmpstrs[i]))
-    return 1
+  reload(flights)
+  tmpstrs = [flights.getstate_py(ffi.string(input[i])) for i in range(insize)]
+  for i in range(insize):
+      result[i] = ffi.from_buffer(buffer(tmpstrs[i]))
+  return 1
 
 @ffi.def_extern()
 def toint_wrapped(input,count,result):
-    for i in range(count):
-        result[i] = flights.toint(ffi.string(input[i]))
-    return 1
+  for i in range(count):
+      result[i] = flights.toint(ffi.string(input[i]))
+  return 1
 
 
 @ffi.def_extern()
 def getairlineyear_wrapped(input,insize,result):
-    reload(flights)
-    for i in range(insize):
-          result[i] = flights.getairlineyear(ffi.string(input[i]))
-    return 1
+  reload(flights)
+  for i in range(insize):
+        result[i] = flights.getairlineyear(ffi.string(input[i]))
+  return 1
 
 @ffi.def_extern()
 def defunctyear_wrapped(input,insize,result):
-    reload(flights)
-    for i in range(insize):
-        result[i] = flights.defunctyear(ffi.string(input[i]))
-    return 1
+  reload(flights)
+  for i in range(insize):
+      result[i] = flights.defunctyear(ffi.string(input[i]))
+  return 1
 
 @ffi.def_extern()
 def gettime_wrapped(input,insize,result):
-    reload(flights)
-    tmpstrs = [flights.gettime(input[i]) for i in range(insize)]
-    for i in range(insize):
-      result[i] = ffi.from_buffer(buffer(tmpstrs[i]))
-    return 1
+  reload(flights)
+  tmpstrs = [flights.gettime(input[i]) for i in range(insize)]
+  for i in range(insize):
+    result[i] = ffi.from_buffer(buffer(tmpstrs[i]))
+  return 1
 
 @ffi.def_extern()
 def cleancode_wrapped(input,insize,result):
-    reload(flights)
-    for i in range(insize):
-      result[i] = ffi.from_buffer(buffer(flights.cleanCode(input[i])))
-    return 1
+  reload(flights)
+  for i in range(insize):
+    result[i] = ffi.from_buffer(buffer(flights.cleanCode(input[i])))
+  return 1
 
 @ffi.def_extern()
 def divertedmap_wrapped(input1, input2, insize, result):
-    reload(flights)
-    for i in range(insize):
-      result[i] = ffi.from_buffer(buffer(flights.divertedmap(input1[i], input2[i])))
-    return 1
+  reload(flights)
+  for i in range(insize):
+    result[i] = ffi.from_buffer(buffer(flights.divertedmap(input1[i], input2[i])))
+  return 1
 
 @ffi.def_extern()
 def cancelledbool_wrapped(input,insize,result):
-        reload(flights)
-        for i in range(insize):
-          result[i] = flights.cancelledbool(input[i])
-        return 1
+  reload(flights)
+  for i in range(insize):
+    result[i] = flights.cancelledbool(input[i])
+  return 1
 
 @ffi.def_extern()
 def fillInTimesUDF_wrapped(input1,input2,input3, insize,result):
-    reload(flights)
-    for i in range(insize):
-        result[i] = flights.fillintimes(input1[i],ffi.string(input2[i]),ffi.string(input3[i]))
-    return 1
+  reload(flights)
+  for i in range(insize):
+      result[i] = flights.fillintimes(input1[i],ffi.string(input2[i]),ffi.string(input3[i]))
+  return 1
 
 @ffi.def_extern()
 def extracttype_wrapped(input,insize,result):
@@ -147,21 +151,22 @@ def extracttype_wrapped(input,insize,result):
 
 @ffi.def_extern()
 def extractpcode_wrapped(input, insize, result):
-    from importlib import reload
-    reload(zillow)
-    for i in range(insize):
-        s = zillow.extractpcode(ffi.string(input[i]))
-        result[i] = ffi.new("char[]", s.encode("utf-8"))
-    return 1
+  from importlib import reload
+  reload(zillow)
+  for i in range(insize):
+      s = zillow.extractpcode(ffi.string(input[i]))
+      result[i] = ffi.new("char[]", s.encode("utf-8"))
+  return 1
                         
 @ffi.def_extern()
 def extractpcodenew_wrapped(input, insize, result):
-    from importlib import reload
-    reload(zillow)
-    for i in range(insize):
-        s = zillow.extractpcodenew(ffi.string(input[i]))
-        result[i] = ffi.new("char[]", s.encode("utf-8"))
-    return 1
+  print("extractpcodenew_wrapped called")
+  from importlib import reload
+  reload(zillow)
+  for i in range(insize):
+      s = zillow.extractpcodenew(ffi.string(input[i]))
+      result[i] = ffi.new("char[]", s.encode("utf-8"))
+  return 1
 
 @ffi.def_extern()
 def extractbd_wrapped(input,insize,result):
@@ -195,10 +200,12 @@ def extractsqfeet_wrapped(input,insize,result):
 
 @ffi.def_extern()
 def extractprice_sell_wrapped(input,insize,result):
-    reload(zillow)
-    for i in range(insize):
-      result[i] = zillow.extractprice_sell(ffi.string(input[i]))
-    return 1
+  reload(zillow)
+  for i in range(insize):
+    result[i] = zillow.extractprice_sell(ffi.string(input[i]))
+  return 1
 """)
 
-ffi.compile(verbose=True)
+output_dir = "YeSQL_MonetDB/cffi_wrappers"
+os.makedirs(output_dir, exist_ok=True)
+ffi.compile(tmpdir=output_dir, verbose=True)

@@ -24,7 +24,6 @@ def update_tablelist():
     cursor1 = connection.cursor()
     cursor1.execute("select * from tables where system = 0;")
 
-
     try:
         while True:
             tname=cursor1.next()[1].lower()
@@ -447,13 +446,9 @@ def process_args():
     else:
        pass
 
-
-
 VERSION='1.0'
 mtermdetails="MonetDB-YeSQL - version "+VERSION
 intromessage="""Enter SQL statements terminated with a ";" """
-
-
 
 if 'HOME' not in os.environ: # Windows systems
         if 'HOMEDRIVE' in os.environ and 'HOMEPATH' in os.environ:
@@ -462,8 +457,6 @@ if 'HOME' not in os.environ: # Windows systems
                 os.environ['HOME'] = "C:\\"
 
 histfile = os.path.join(os.environ["HOME"], ".yesql")
-
-
 
 automatic_reload=False
 if not pipedinput:
@@ -479,22 +472,14 @@ if not pipedinput:
     readline.parse_and_bind("tab: complete")
     readline.set_completer_delims(' \t\n`!@#$^&*()=+[{]}|;:\'",<>?')
 
-
-
-
-
 separator = "|"
 allquote = False
 beeping = False
 db = ""
 language, output_encoding = locale.getdefaultlocale()
 
-
-
 if output_encoding==None:
     output_encoding='UTF8'
-
-
 
 rawprinter=buildrawprinter(separator)
 
@@ -728,10 +713,6 @@ while True:
             colorama.init()
             rownum = 0
             statements = statement.split(';')
-
-
-
-
             try:
                 cursor = connection.cursor()
                 for statement in statements:
@@ -782,7 +763,6 @@ while True:
                 newcols = [x[0] for x in desc]
                 schemaprint(newcols)
             if not pipedinput:
-
                 if rownum==0:
                     printterm( "Query executed in %s min. %s sec %s msec." %((int(tmdiff.days)*24*60+(int(tmdiff.seconds)/60),(int(tmdiff.seconds)%60),(int(tmdiff.microseconds)/1000))) )
                 else:
@@ -805,6 +785,7 @@ while True:
         except Exception as e:
             emsg=str(e)
             if pipedinput:
+                print("exit with error")
                 exitwitherror(functions.mstr(emsg))
             else:
                 try:

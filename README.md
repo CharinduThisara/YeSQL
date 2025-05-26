@@ -53,6 +53,10 @@ python3 YeSQL_MonetDB/monetdb.py -d fldb -H localhost -P 50000 -u monetdb -p mon
 ``` 
 The YeSQL's terminal with its language extensions (syntactic inversion) can be used with MonetDB. 
 
+```
+python3 YeSQL_MonetDB/cffi_wrappers/build.py
+```
+
 ## Installation with SQLite
 
 Load the data with
