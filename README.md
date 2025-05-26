@@ -64,6 +64,13 @@ Load the data with
 pypy2.7-v7.3.6-linux64/bin/pypy YeSQLite/mterm.py -f udfs -d data.db  < data/loaddata_sqlite.sql
 ```
 
+## Adding new function
+
+1. Add a Function to Functions Folder
+2. Add the wrpper function definition to udfs.h in C. input(depends on function), size(always int), output (depends on function)
+3. add the same to build.py embedding_api function
+4. add the function definition to embedding_init_code
+5. Define the new sql function in createfuncs.sql
 run end-to-end experiments with
 ```
 pypy2.7-v7.3.6-linux64/bin/pypy YeSQLite/mterm.py -f udfs -d data.db

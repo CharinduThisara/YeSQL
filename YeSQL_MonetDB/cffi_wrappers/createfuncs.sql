@@ -229,3 +229,26 @@ LANGUAGE C {
 result->initialize(result, input.count);
 extractpcodenew_wrapped(input.data, input.count, result->data);
 };
+
+CREATE OR REPLACE FUNCTION sectohuman(input BIGINT)
+RETURNS STRING
+LANGUAGE C
+{
+#pragma CFLAGS -I$CURRENT/YeSQL_MonetDB/cffi_wrappers
+#pragma LDFLAGS -L$CURRENT/YeSQL_MonetDB/cffi_wrappers -lwrappedudfs
+#include "udfs.h"
+result->initialize(result, input.count);
+sectohuman_wrapped(input.data, input.count, result->data);
+};
+
+CREATE OR REPLACE FUNCTION timedelta2millisec(input BIGINT)
+RETURNS STRING
+LANGUAGE C
+{
+#pragma CFLAGS -I$CURRENT/YeSQL_MonetDB/cffi_wrappers
+#pragma LDFLAGS -L$CURRENT/YeSQL_MonetDB/cffi_wrappers -lwrappedudfs
+#include "udfs.h"
+result->initialize(result, input.count);
+timedelta2millisec_wrapped(input.data, input.count, result->data);
+};
+

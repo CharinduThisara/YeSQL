@@ -27,6 +27,7 @@ int extractsqfeet_wrapped(char** input, int size, int* result);
 int extractprice_sell_wrapped(char** input, int size, int* result);
 int avg_word_len_wrapped(char** input, int size, double* result);
 int extractpcodenew_wrapped(char** input, int size, char** result);
+int sectohuman_wrapped(int64_t* input, int size, char** result);
 """)
 
 ffi.set_source("libwrappedudfs", "#include <stdint.h>", libraries=[], extra_link_args=["-pthread"])
@@ -44,13 +45,15 @@ sys.path.insert(0, env2)
 sys.path.insert(0, env1)
 import flights
 import zillow
-from aggregate import date as d
+import row.date as d
+import aggregate.date as da
 
 @ffi.def_extern()
 def getairlinename_wrapped(input,insize,result):
   reload(flights)
   for i in range(insize):
-    result[i] = lib.strdup(ffi.from_buffer(buffer(flights.getairlinename(ffi.string(input[i])))))
+    result[i] = ffi.new("char[]", flights.getairlinename(ffi.string(input[i])).encode("utf-8"))
+    # result[i] = lib.strdup(ffi.from_buffer(buffer(flights.getairlinename(ffi.string(input[i])))))
   return 1
 
 @ffi.def_extern()
@@ -58,7 +61,8 @@ def getcity_wrapped(input, insize, result):
   # importlib.reload(mymodule)
   reload(flights)
   for i in range(insize):
-      result[i] = flights.getcity(lib.strdup(input[i]))
+      result[i] = ffi.new("char[]", flights.getcity(ffi.string(input[i])).encode("utf-8"))
+      # result[i] = flights.getcity(lib.strdup(input[i]))
   return 1
 
 @ffi.def_extern()
@@ -103,7 +107,8 @@ def getairlineyear_wrapped(input,insize,result):
 def defunctyear_wrapped(input,insize,result):
   reload(flights)
   for i in range(insize):
-      result[i] = flights.defunctyear(ffi.string(input[i]))
+      py_inp = ffi.string(intput[i]).decode("utf-8")
+      result[i] = flights.defunctyear(ffi.string(py_inp))
   return 1
 
 @ffi.def_extern()
@@ -160,7 +165,6 @@ def extractpcode_wrapped(input, insize, result):
                         
 @ffi.def_extern()
 def extractpcodenew_wrapped(input, insize, result):
-  print("extractpcodenew_wrapped called")
   from importlib import reload
   reload(zillow)
   for i in range(insize):
@@ -204,6 +208,15 @@ def extractprice_sell_wrapped(input,insize,result):
   for i in range(insize):
     result[i] = zillow.extractprice_sell(ffi.string(input[i]))
   return 1
+
+@ffi.def_extern()
+def sectohuman_wrapped(input, insize, result):
+    from importlib import reload
+    reload(d)
+    for i in range(insize):
+      output = d.sectohuman(input[i])
+      result[i] = ffi.new("char[]", output.encode("utf-8"))
+    return 1
 """)
 
 output_dir = "YeSQL_MonetDB/cffi_wrappers"

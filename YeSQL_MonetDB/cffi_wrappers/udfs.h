@@ -1,3 +1,4 @@
+
 extern int cleancode_wrapped(char* input, int size, char** result);
 extern int cancelledbool_wrapped(double* input, int size, uint8_t * result);
 extern int divertedmap_wrapped(double * input1, char* input2,  int size, char** result);
@@ -18,5 +19,5 @@ extern int extractba_wrapped(char** input, int size, int* result);
 extern int extractsqfeet_wrapped(char** input, int size, int* result);
 extern int extractprice_sell_wrapped(char** input, int size, int* result);
 extern int avg_word_len_wrapped(char** input, int size, double* result);
-
 extern int extractpcodenew_wrapped(char** input, int size, char** result);
+extern int sectohuman_wrapped(int64_t* input, int size, char** result);
