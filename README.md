@@ -2,7 +2,7 @@
 
 [YeSQL](https://athenarc.github.io/YeSQL/) is an SQL extension that provides more usable, more expressive, and more perfomant Python UDFs and can be integrated into both server-based and embedded DBMSs. It enriches SQL with a functional syntax that unifies the expression of relational and user-defined functionality and optimizes the execution of both in a seamless fashion, assigning processing tasks to the DBMS or the UDF host language VM accordingly and employing efficient low-level implementation techniques. Key characteristics of the YeSQL language that enhance usability and expressiveness include (a) stateful, parametric, and polymorphic UDFs, (b) dynamically typed UDFs, (c) scalar and aggregate UDFs returning arbitrary table forms, and (d) UDF pipelining. Key performance characteristics include (a) seamless data exchange between the UDF and the DBMS, (b) JIT-compiled UDFs, (c) UDF parallelization, (d) stateful UDFs, and (e) UDF fusion.
 
-This is a fork of the Original repo with instruction on running YeSQL Implementation on top of MonetDB. You can find the Docker Image for running the MonetDB server [here](LINK) 
+This is a fork of the Original repo with instruction on running YeSQL Implementation on top of MonetDB. You can find the Docker Image for running the MonetDB server [here](https://hub.docker.com/r/tharushabandaranayake/yesql) 
 # Documentation
 
 You'll find YeSQL [documentation here](https://athenarc.github.io/YeSQL/).
@@ -11,7 +11,7 @@ You'll find YeSQL [documentation here](https://athenarc.github.io/YeSQL/).
 
 ### Requirements
 
-Ubuntu 20.04 with cmake version 3.12 or newer or you can get the docker image with all dependencies installed from [here]()
+Ubuntu 20.04 with cmake version 3.12 or newer or you can get the docker image with all dependencies installed from [here](https://hub.docker.com/r/tharushabandaranayake/yesql)
 
 ### Installation
 
