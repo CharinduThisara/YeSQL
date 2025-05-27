@@ -1,8 +1,8 @@
 # coding: utf-8
-import functions
+# import functions
 import datetime
-from lib import iso8601
-from lib.dateutil import parser
+# from lib import iso8601
+# from lib.dateutil import parser
 
 def cleantimezone(*args):
 
@@ -40,7 +40,7 @@ def cleantimezone(*args):
     elif mindex !=-1 and mindex>13:
         return d[0:mindex]
     else:
-        return d;
+        return d
 
 cleantimezone.registered=True
 
@@ -87,7 +87,7 @@ def activityindex(*args):
     elif (diff.days)>=24*30:
                     return 0
     else:
-        return -1;
+        return -1
 
 activityindex.registered=True
 
@@ -116,31 +116,33 @@ def sectohuman(*args):
     1 day 3 hours 46 min 40 sec
     11 days 13 hours 46 min 40 sec
     """
-
+    # return "sectohuman called with args: "
     secs=int(args[0])
-    h=''
-    days=secs/86400
+    # return str(secs)
+    h = ''
+    days=secs//86400
+    # return str(secs)
     if days > 0:
         h+=str(days)+' day'
         if days > 1:
             h+='s'
         h+=' '
         secs=secs % 86400
-    hours=secs/3600
+    hours=secs//3600
     if hours > 0:
         h+=str(hours)+' hour'
         if hours > 1:
             h+='s'
         h+=' '
         secs=secs % 3600
-    mins=secs/60
+    mins=secs//60
     if mins > 0:
         h+=str(mins)+' min '
         secs=secs % 60
     if secs > 0:
         h+=str(secs)+' sec'
 
-    return h
+    return h;
 
 sectohuman.registered=True
 

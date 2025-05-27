@@ -27,7 +27,7 @@ int extractsqfeet_wrapped(char** input, int size, int* result);
 int extractprice_sell_wrapped(char** input, int size, int* result);
 int avg_word_len_wrapped(char** input, int size, double* result);
 int extractpcodenew_wrapped(char** input, int size, char** result);
-int sectohuman_wrapped(int64_t* input, int size, char** result);
+int sectohuman_wrapped(char** input, int size, char** result);
 """)
 
 ffi.set_source("libwrappedudfs", "#include <stdint.h>", libraries=[], extra_link_args=["-pthread"])
@@ -45,7 +45,7 @@ sys.path.insert(0, env2)
 sys.path.insert(0, env1)
 import flights
 import zillow
-import row.date as d
+import row.date as row_date
 import aggregate.date as da
 
 @ffi.def_extern()
@@ -212,10 +212,11 @@ def extractprice_sell_wrapped(input,insize,result):
 @ffi.def_extern()
 def sectohuman_wrapped(input, insize, result):
     from importlib import reload
-    reload(d)
+    reload(row_date)
     for i in range(insize):
-      output = d.sectohuman(input[i])
-      result[i] = ffi.new("char[]", output.encode("utf-8"))
+      sec = ffi.cast("int64_t *", input)[i]
+      human_readable = row_date.sectohuman(sec)
+      result[i] = ffi.new("char[]", human_readable.encode("utf-8"))
     return 1
 """)
 

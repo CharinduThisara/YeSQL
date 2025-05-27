@@ -20,4 +20,4 @@ extern int extractsqfeet_wrapped(char** input, int size, int* result);
 extern int extractprice_sell_wrapped(char** input, int size, int* result);
 extern int avg_word_len_wrapped(char** input, int size, double* result);
 extern int extractpcodenew_wrapped(char** input, int size, char** result);
-extern int sectohuman_wrapped(int64_t* input, int size, char** result);
+extern int sectohuman_wrapped(char** input, int size, char** result);

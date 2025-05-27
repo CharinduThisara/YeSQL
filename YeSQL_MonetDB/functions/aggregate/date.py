@@ -1,8 +1,8 @@
 import queue
 from . import setpath
-import functions
+# import functions
 import datetime
-from lib import iso8601
+# from lib import iso8601
 
 __docformat__ = 'reStructuredText en'
 
@@ -195,7 +195,6 @@ class dategroupduration:
         diff=self.datemax - self.datemin
 
         return diff.days*86400+diff.seconds
-
 
 class frecencyindex:
     """
