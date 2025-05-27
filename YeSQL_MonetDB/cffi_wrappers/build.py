@@ -32,6 +32,9 @@ int sectohuman_wrapped(char** input, int size, char** result);
 
 ffi.set_source("libwrappedudfs", "#include <stdint.h>", libraries=[], extra_link_args=["-pthread"])
 
+# The following code is the Python code that will be embedded in the CFFI module.
+# Make sure to adjust the import paths and module names as necessary. Make sure correct paths are loaded fo Sys.path
+# Reload is used to ensure that the latest version of the modules is used when the functions are called.
 ffi.embedding_init_code(f"""
 import struct
 import sys, os
@@ -41,6 +44,7 @@ from libwrappedudfs import  lib, ffi
 env1 = os.path.expanduser(os.path.expandvars('$PYTHONPATH'))
 env2 = os.path.expanduser(os.path.expandvars('$FUNCTION_PATH'))
 
+# Paths should be added to sys.path to make sure we can import the modules
 sys.path.insert(0, env2)
 sys.path.insert(0, env1)
 import flights
@@ -220,6 +224,7 @@ def sectohuman_wrapped(input, insize, result):
     return 1
 """)
 
+# Change the output directory as needed
 output_dir = "YeSQL_MonetDB/cffi_wrappers"
 os.makedirs(output_dir, exist_ok=True)
 ffi.compile(tmpdir=output_dir, verbose=True)
